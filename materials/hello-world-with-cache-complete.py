@@ -9,6 +9,7 @@ from gem5.components.processors.simple_processor import SimpleProcessor
 from gem5.components.processors.cpu_types import CPUTypes
 from gem5.resources.resource import obtain_resource
 from gem5.simulate.simulator import Simulator
+from gem5.isas import ISA
 
 
 # Obtain the components.
@@ -17,7 +18,7 @@ cache_hierarchy = PrivateL1PrivateL2CacheHierarchy(
     l1d_size="32KiB", l1i_size="32KiB", l2_size="64KiB"
 )
 memory = SingleChannelDDR3_1600("1GiB")
-processor = SimpleProcessor(cpu_type=CPUTypes.TIMING, num_cores=1)
+processor = SimpleProcessor(cpu_type=CPUTypes.TIMING, isa=ISA.X86, num_cores=1)
 
 # Add them to the board.
 board = SimpleBoard(

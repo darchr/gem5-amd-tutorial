@@ -13,6 +13,7 @@ from gem5.components.processors.cpu_types import CPUTypes
 from gem5.resources.resource import obtain_resource
 from gem5.simulate.simulator import Simulator
 from gem5.simulate.exit_event import ExitEvent
+from gem5.isas import ISA
 
 # This runs a check to ensure the gem5 binary is compiled to include X86 and
 # supports the MESI Two Level coherence protocol.
@@ -48,6 +49,7 @@ processor = SimpleSwitchableProcessor(
     starting_core_type=CPUTypes.TIMING,
     switch_core_type=CPUTypes.O3,
     num_cores=2,
+    isa=ISA.X86,
 )
 
 # Here we setup the board. The X86Board allows for Full-System X86 simulations.
