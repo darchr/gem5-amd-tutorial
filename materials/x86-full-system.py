@@ -82,14 +82,26 @@ board.set_kernel_disk_workload(
     readfile_contents=command,
 )
 
-simulator = Simulator(
-    board=board,
-    on_exit_event={
-        # Here we want override the default behavior for the first m5 exit
-        # exit event. Instead of exiting the simulator, we just want to
-        # switch the processor. The 2nd 'm5 exit' after will revert to using
-        # default behavior where the simulator run will exit.
-        ExitEvent.EXIT: (func() for func in [processor.switch])
-    },
-)
-simulator.run()
+simulator = Simulator(board=board)
+
+simulator.run()  # Runs up to the first `m5 exit` event.
+
+# Here we can do things between the exit events.
+
+processor.switch()
+
+# Now we re-enter the simulation loop.
+
+simulator.run()  # Runs up to the second `m5 exit` event.
+
+# simulator = Simulator(
+#    board=board,
+#    on_exit_event={
+# Here we want override the default behavior for the first m5 exit
+# exit event. Instead of exiting the simulator, we just want to
+# switch the processor. The 2nd 'm5 exit' after will revert to using
+# default behavior where the simulator run will exit.
+#        ExitEvent.EXIT: (func() for func in [processor.switch])
+#    },
+# )
+# simulator.run()
